@@ -30,7 +30,7 @@ foreach ($dir in Get-ChildItem (Join-Path $BackupDir "apks") -Directory) {
 
 # Animation scales back to their backed-up values (Android default is 1 when unset)
 $global = Get-Content (Join-Path $BackupDir "settings_global.txt")
-foreach ($key in "window_animation_scale", "transition_animation_scale", "animator_duration_scale") {
+foreach ($key in "window_animation_scale", "transition_animation_scale", "animator_duration_scale", "set_auto_play") {
     $saved = ($global | Where-Object { $_ -like "$key=*" }) -replace "^$key=", ''
     if (-not $saved) { $saved = "1" }
     & $Adb -s $Device shell "settings put global $key $saved"

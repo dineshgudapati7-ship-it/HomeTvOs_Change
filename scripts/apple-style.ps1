@@ -23,4 +23,7 @@ Sh "settings put secure accessibility_enabled 1"
 Sh "settings put secure screensaver_components $dream"
 Sh "settings put secure screensaver_enabled 1"
 
+# Wake to home: stop Xiaomi's power-on "auto play" of the last TV input (Live TV, blank without an antenna)
+Sh "settings put global set_auto_play 0"
+
 Write-Host "Apple TV style applied"
