@@ -36,4 +36,14 @@ foreach ($key in "window_animation_scale", "transition_animation_scale", "animat
     & $Adb -s $Device shell "settings put global $key $saved"
 }
 
+# Screensaver / accessibility (launcher override) and home screen back to their backed-up values
+$secure = Get-Content (Join-Path $BackupDir "settings_secure.txt")
+foreach ($key in "screensaver_components", "screensaver_enabled", "accessibility_enabled", "enabled_accessibility_services") {
+    $saved = ($secure | Where-Object { $_ -like "$key=*" }) -replace "^$key=", ''
+    if ($saved -and $saved -ne "null") { & $Adb -s $Device shell "settings put secure $key '$saved'" }
+    else { & $Adb -s $Device shell "settings delete secure $key" | Out-Null }
+}
+$homeActivity = (Get-Content (Join-Path $BackupDir "home_activity.txt") | Select-Object -Last 1).Trim()
+& $Adb -s $Device shell "cmd package set-home-activity $homeActivity"
+
 Write-Host "Restore complete"
