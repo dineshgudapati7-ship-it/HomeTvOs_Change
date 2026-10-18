@@ -1,0 +1,2 @@
+# APK copies are large (~400 MB) and are third-party apps that shouldn't be pushed to GitHub
+backup/*/apks/
